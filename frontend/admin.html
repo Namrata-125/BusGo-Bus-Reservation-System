@@ -1,0 +1,708 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BusGo | Admin Dashboard</title>
+    <meta name="description" content="Manage buses, routes, bookings and payments using the BusGo Admin Dashboard.">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f7fb;
+            font-family: Arial, sans-serif;
+            color: #172b46;
+        }
+
+        .sidebar {
+            min-height: 100vh;
+            background: #10233f;
+            color: white;
+            padding: 28px 20px;
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: bold;
+            color: #64d8cb;
+            margin-bottom: 35px;
+        }
+
+        .sidebar-label {
+            color: #8fa2bd;
+            font-size: 12px;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .nav-link {
+            color: #d7e2f1;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .nav-link.active,
+        .nav-link:hover {
+            background: #203c61;
+            color: white;
+        }
+
+        .main-content {
+            padding: 30px;
+            min-width: 0;
+        }
+
+        .stat-card,
+        .section-card {
+            background: white;
+            border: none;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 18px rgba(21, 43, 69, 0.06);
+        }
+
+        .stat-card {
+            height: 100%;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #10233f;
+            overflow-wrap: anywhere;
+        }
+
+        .muted {
+            color: #738197;
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #e0a020;
+            margin-right: 7px;
+        }
+
+        .status-good {
+            color: #087f67;
+            font-weight: bold;
+        }
+
+        .status-error {
+            color: #c0392b;
+            font-weight: bold;
+        }
+
+        .table th {
+            color: #738197;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 767px) {
+            .sidebar {
+                min-height: auto;
+            }
+
+            .main-content {
+                padding: 20px 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- SIDEBAR -->
+        <aside class="col-md-3 col-lg-2 sidebar">
+            <div class="brand">BusGo.</div>
+
+            <p class="sidebar-label">ADMINISTRATION</p>
+
+            <nav class="nav flex-column">
+                <a class="nav-link active" href="#dashboard">Dashboard</a>
+                <a class="nav-link" href="#management">Management</a>
+                <a class="nav-link" href="#system">System Status</a>
+            </nav>
+
+            <button id="refreshBtn" class="btn btn-outline-light w-100 mt-3">
+                Refresh Data
+            </button>
+
+            <button id="logoutBtn" class="btn btn-outline-light w-100 mt-3">
+                Logout
+            </button>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="col-md-9 col-lg-10 main-content">
+
+            <header class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                <div>
+                    <h2 class="fw-bold mb-1">Admin Dashboard</h2>
+                    <p class="muted mb-0">
+                        Manage your BusGo reservation system.
+                    </p>
+                </div>
+
+                <span class="badge text-bg-success p-2">ADMIN PANEL</span>
+            </header>
+
+            <!-- DASHBOARD STATISTICS -->
+            <section id="dashboard" class="mb-4">
+                <div class="row g-3">
+
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="stat-card">
+                            <p class="muted mb-2">Total Buses</p>
+                            <div class="stat-number" id="busCount">—</div>
+                            <small class="muted" id="busMessage">Loading data...</small>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="stat-card">
+                            <p class="muted mb-2">Total Routes</p>
+                            <div class="stat-number" id="routeCount">—</div>
+                            <small class="muted" id="routeMessage">Loading data...</small>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="stat-card">
+                            <p class="muted mb-2">Total Bookings</p>
+                            <div class="stat-number" id="bookingCount">—</div>
+                            <small class="muted" id="bookingMessage">Loading data...</small>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="stat-card">
+                            <p class="muted mb-2">Payment Records</p>
+                            <div class="stat-number" id="paymentCount">—</div>
+                            <small class="muted" id="paymentMessage">Loading data...</small>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- MANAGEMENT LINKS -->
+            <section id="management" class="section-card mb-4">
+                <h5 class="fw-bold mb-3">Management</h5>
+
+                <p class="muted">
+                    Open the existing BusGo pages to use the reservation system.
+                </p>
+
+                <div class="d-flex flex-wrap gap-2">
+                    <a class="btn btn-primary" href="index.html">View Website</a>
+                    <a class="btn btn-outline-primary" href="my-bookings.html">My Bookings</a>
+                    <a class="btn btn-outline-primary" href="bus-results.html">Search Buses</a>
+                </div>
+            </section>
+
+            <!-- SYSTEM STATUS -->
+            <section id="system" class="section-card mb-4">
+                <h5 class="fw-bold mb-3">System Status</h5>
+
+                <p class="mb-2">
+                    <span class="status-dot" id="statusDot"></span>
+                    Backend:
+                    <span id="backendStatus">Checking...</span>
+                </p>
+
+                <p class="muted mb-2" id="statusMessage">
+                    Connecting to the BusGo backend.
+                </p>
+
+                <p class="mb-0">
+                    Logged-in account:
+                    <strong id="adminEmail">Checking...</strong>
+                </p>
+            </section>
+
+            <!-- BUS RECORDS -->
+            <section class="section-card mb-4">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                    <h5 class="fw-bold mb-0">Bus Records</h5>
+
+                    <button class="btn btn-sm btn-outline-primary" id="reloadBusesBtn">
+                        Reload Buses
+                    </button>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>Bus ID</th>
+                                <th>Bus Name</th>
+                                <th>Bus Number</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="busTableBody">
+                            <tr>
+                                <td colspan="3" class="muted">Loading bus records...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- PAYMENT RECORDS -->
+            <section class="section-card mb-4">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                    <h5 class="fw-bold mb-0">Payment Records</h5>
+
+                    <button class="btn btn-sm btn-outline-primary" id="reloadPaymentsBtn">
+                        Reload Payments
+                    </button>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>Payment ID</th>
+                                <th>Booking ID</th>
+                                <th>Method</th>
+                                <th>Amount</th>
+                                <th>Transaction ID</th>
+                                <th>Status</th>
+                                <th>Payment Date</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="paymentTableBody">
+                            <tr>
+                                <td colspan="7" class="muted">Loading payment records...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+</div>
+
+<script>
+    const API_BASE_URL = "http://localhost:8080/api";
+
+    // Read the latest token each time an API request is made.
+    function getCurrentToken() {
+        return localStorage.getItem("busgo_token");
+    }
+
+    function getCurrentUser() {
+        try {
+            return JSON.parse(
+                localStorage.getItem("busgo_user") || "null"
+            );
+        } catch (error) {
+            console.error("Could not read saved user details.");
+            return null;
+        }
+    }
+
+    function getAuthHeaders() {
+        const token = getCurrentToken();
+
+        return token
+            ? { "Authorization": "Bearer " + token }
+            : {};
+    }
+
+    const backendStatus = document.getElementById("backendStatus");
+    const statusMessage = document.getElementById("statusMessage");
+    const statusDot = document.getElementById("statusDot");
+
+    function setStatus(message, state) {
+        backendStatus.textContent = message;
+
+        statusDot.style.background =
+            state === "good" ? "#16a085" :
+            state === "error" ? "#d64545" : "#e0a020";
+
+        backendStatus.className =
+            state === "good" ? "status-good" :
+            state === "error" ? "status-error" : "";
+    }
+
+    async function apiGet(endpoint) {
+        const response = await fetch(
+            API_BASE_URL + "/" + endpoint.replace(/^\/+/, ""),
+            {
+                method: "GET",
+                headers: getAuthHeaders()
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
+
+        const contentType = response.headers.get("content-type") || "";
+
+        if (contentType.includes("application/json")) {
+            return await response.json();
+        }
+
+        return await response.text();
+    }
+
+    // Accept a direct array or common API wrapper formats.
+    function getArray(data) {
+        if (Array.isArray(data)) {
+            return data;
+        }
+
+        if (data && Array.isArray(data.content)) {
+            return data.content;
+        }
+
+        if (data && Array.isArray(data.data)) {
+            return data.data;
+        }
+
+        return null;
+    }
+
+    function getErrorMessage(error) {
+        if (error.message === "HTTP 401") {
+            return "Session expired. Please log in again.";
+        }
+
+        if (error.message === "HTTP 403") {
+            return "Access denied for this account.";
+        }
+
+        if (error instanceof TypeError) {
+            return "Network or CORS error.";
+        }
+
+        return "Could not load data (" + error.message + ").";
+    }
+
+    async function loadCollection(endpoint, countId, messageId) {
+        const countElement = document.getElementById(countId);
+        const messageElement = document.getElementById(messageId);
+
+        countElement.textContent = "…";
+        messageElement.textContent = "Loading data...";
+
+        try {
+            const data = await apiGet(endpoint);
+            const items = getArray(data);
+
+            if (items === null) {
+                countElement.textContent = "—";
+                messageElement.textContent = "Unexpected API response.";
+                console.error("Unexpected response from /" + endpoint, data);
+                return null;
+            }
+
+            countElement.textContent = items.length;
+            messageElement.textContent = "Loaded from backend API";
+
+            return items;
+        } catch (error) {
+            countElement.textContent = "—";
+            messageElement.textContent = getErrorMessage(error);
+
+            console.error("Error loading /" + endpoint + ":", error);
+
+            return null;
+        }
+    }
+
+    async function loadBuses() {
+        const tableBody = document.getElementById("busTableBody");
+
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="3" class="muted">Loading bus records...</td>
+            </tr>
+        `;
+
+        const buses = await loadCollection(
+            "buses",
+            "busCount",
+            "busMessage"
+        );
+
+        if (buses === null) {
+            const message =
+                document.getElementById("busMessage").textContent;
+
+            tableBody.innerHTML = "";
+
+            const row = document.createElement("tr");
+            const cell = document.createElement("td");
+
+            cell.colSpan = 3;
+            cell.className = "text-danger";
+            cell.textContent = message;
+
+            row.appendChild(cell);
+            tableBody.appendChild(row);
+
+            return;
+        }
+
+        if (buses.length === 0) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="3" class="muted">No buses found.</td>
+                </tr>
+            `;
+            return;
+        }
+
+        tableBody.innerHTML = "";
+
+        buses.forEach(function (bus) {
+            const row = document.createElement("tr");
+
+            const idCell = document.createElement("td");
+            idCell.textContent = bus.busId ?? bus.id ?? "—";
+
+            const nameCell = document.createElement("td");
+            nameCell.textContent = bus.busName ?? bus.name ?? "—";
+
+            const numberCell = document.createElement("td");
+            numberCell.textContent = bus.busNumber ?? "—";
+
+            row.append(idCell, nameCell, numberCell);
+            tableBody.appendChild(row);
+        });
+    }
+
+    function getPaymentBadge(status) {
+        if (!status) {
+            return '<span class="badge bg-secondary">UNKNOWN</span>';
+        }
+
+        switch (status) {
+            case "REFUNDED":
+                return '<span class="badge bg-info text-dark">REFUNDED (SIMULATED)</span>';
+            case "REFUND_PENDING":
+                return '<span class="badge bg-warning text-dark">REFUND_PENDING</span>';
+            case "SUCCESS":
+                return '<span class="badge bg-success">SUCCESS</span>';
+            case "FAILED":
+                return '<span class="badge bg-danger">FAILED</span>';
+            case "PENDING":
+                return '<span class="badge bg-secondary">PENDING</span>';
+            default:
+                return '<span class="badge bg-light text-dark border">' + status + '</span>';
+        }
+    }
+
+    async function loadPayments() {
+        const tableBody = document.getElementById("paymentTableBody");
+        if (!tableBody) return;
+
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="7" class="muted">Loading payment records...</td>
+            </tr>
+        `;
+
+        const payments = await loadCollection(
+            "payments",
+            "paymentCount",
+            "paymentMessage"
+        );
+
+        if (payments === null) {
+            const message =
+                document.getElementById("paymentMessage").textContent;
+
+            tableBody.innerHTML = "";
+
+            const row = document.createElement("tr");
+            const cell = document.createElement("td");
+
+            cell.colSpan = 7;
+            cell.className = "text-danger";
+            cell.textContent = message;
+
+            row.appendChild(cell);
+            tableBody.appendChild(row);
+
+            return;
+        }
+
+        if (payments.length === 0) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="7" class="muted">No payment records found.</td>
+                </tr>
+            `;
+            return;
+        }
+
+        tableBody.innerHTML = "";
+
+        payments.forEach(function (payment) {
+            const row = document.createElement("tr");
+
+            const idCell = document.createElement("td");
+            idCell.textContent = payment.paymentId != null ? "#" + payment.paymentId : "—";
+
+            const bookingCell = document.createElement("td");
+            bookingCell.textContent =
+                payment.booking && payment.booking.bookingId != null
+                    ? "#" + payment.booking.bookingId
+                    : "—";
+
+            const methodCell = document.createElement("td");
+            methodCell.textContent = payment.paymentMethod || "—";
+
+            const amountCell = document.createElement("td");
+            amountCell.textContent =
+                payment.amount != null
+                    ? "₹" + Number(payment.amount).toFixed(2)
+                    : "—";
+
+            const txnCell = document.createElement("td");
+            txnCell.className = "small text-muted font-monospace";
+            txnCell.textContent = payment.transactionId || "—";
+
+            const statusCell = document.createElement("td");
+            statusCell.innerHTML = getPaymentBadge(payment.paymentStatus);
+
+            const dateCell = document.createElement("td");
+            dateCell.className = "small text-muted";
+            dateCell.textContent = payment.paymentDate
+                ? new Date(payment.paymentDate).toLocaleString("en-IN", {
+                    dateStyle: "medium",
+                    timeStyle: "short"
+                })
+                : "—";
+
+            row.append(
+                idCell,
+                bookingCell,
+                methodCell,
+                amountCell,
+                txnCell,
+                statusCell,
+                dateCell
+            );
+            tableBody.appendChild(row);
+        });
+    }
+
+    async function checkBackend() {
+        if (!getCurrentToken()) {
+            setStatus("Login required", "error");
+
+            statusMessage.textContent =
+                "No saved login token found. Log in first, then reopen this page.";
+
+            return false;
+        }
+
+        try {
+            const result = await apiGet("admin/test");
+
+            setStatus("Connected", "good");
+
+            statusMessage.textContent =
+                typeof result === "string"
+                    ? result
+                    : "Admin authorization verified.";
+
+            return true;
+        } catch (error) {
+            console.error("Admin endpoint error:", error);
+
+            if (
+                error.message === "HTTP 401" ||
+                error.message === "HTTP 403"
+            ) {
+                setStatus("Access denied", "error");
+
+                statusMessage.textContent =
+                    "The saved token was rejected. Log in again with your admin account.";
+            } else {
+                setStatus("Connection failed", "error");
+
+                statusMessage.textContent =
+                    error instanceof TypeError
+                        ? "Network or CORS error. Check the browser console."
+                        : "Check that the backend is running on port 8080.";
+            }
+
+            return false;
+        }
+    }
+
+    async function loadDashboard() {
+        const currentUser = getCurrentUser();
+
+        document.getElementById("adminEmail").textContent =
+            currentUser && currentUser.email
+                ? currentUser.email
+                : "Account details unavailable";
+
+        // Each collection is requested independently.
+        // A failure in one card won't stop the other cards from loading.
+        await checkBackend();
+
+        await Promise.all([
+            loadCollection("routes", "routeCount", "routeMessage"),
+            loadBuses(),
+            loadCollection("bookings", "bookingCount", "bookingMessage"),
+            loadPayments()
+        ]);
+    }
+
+    document.getElementById("refreshBtn").addEventListener(
+        "click",
+        loadDashboard
+    );
+
+    document.getElementById("reloadBusesBtn").addEventListener(
+        "click",
+        loadBuses
+    );
+
+    const reloadPaymentsBtn = document.getElementById("reloadPaymentsBtn");
+    if (reloadPaymentsBtn) {
+        reloadPaymentsBtn.addEventListener("click", loadPayments);
+    }
+
+    document.getElementById("logoutBtn").addEventListener(
+        "click",
+        function () {
+            localStorage.removeItem("busgo_token");
+            localStorage.removeItem("busgo_user");
+
+            window.location.href = "login.html";
+        }
+    );
+
+    loadDashboard();
+</script>
+
+</body>
+</html>

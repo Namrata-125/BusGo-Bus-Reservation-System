@@ -1,0 +1,16 @@
+﻿spring.application.name=bus-reservation-backend
+
+# Configure these values for your local MySQL installation
+spring.datasource.url=${DB_URL:jdbc:mysql://localhost:3306/bus_reservation_db}
+spring.datasource.username=${DB_USERNAME:root}
+spring.datasource.password=${DB_PASSWORD:}
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# JPA / Hibernate Configuration
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
+
+# Server Configuration
+server.port=8080

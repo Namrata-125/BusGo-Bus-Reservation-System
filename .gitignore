@@ -1,0 +1,23 @@
+﻿# Java and Maven build output
+**/target/
+**/build/
+*.class
+*.log
+
+# Local configuration and secrets
+**/application.properties
+**/application-local.properties
+**/application-*.properties
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+
+# IDE and operating system files
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db

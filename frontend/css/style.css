@@ -1,0 +1,344 @@
+/* ================= GENERAL ================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #1f2937;
+    background: #ffffff;
+}
+
+
+/* ================= NAVBAR ================= */
+
+.navbar {
+    padding: 16px 0;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.navbar-brand i {
+    margin-right: 6px;
+}
+
+.nav-link {
+    font-weight: 500;
+}
+
+
+/* ================= HERO ================= */
+
+.hero-section {
+    padding: 80px 0 100px;
+    background: linear-gradient(
+        135deg,
+        #eef4ff 0%,
+        #ffffff 100%
+    );
+}
+
+.hero-badge {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 30px;
+    background: #e0e7ff;
+    color: #3730a3;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.hero-title span {
+    color: #0d6efd;
+}
+
+.hero-text {
+    max-width: 600px;
+    margin-top: 20px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #64748b;
+}
+
+
+/* ================= SEARCH CARD ================= */
+
+.search-card {
+    margin-top: 50px;
+    padding: 28px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 15px 45px rgba(15, 23, 42, 0.10);
+}
+
+.form-label {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.input-group-text {
+    background: #ffffff;
+}
+
+.form-control {
+    min-height: 48px;
+}
+
+.search-btn {
+    min-height: 48px;
+    font-weight: 600;
+}
+
+
+/* ================= FEATURES ================= */
+
+.features-section {
+    padding: 80px 0;
+}
+
+.section-label {
+    color: #0d6efd;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.feature-card {
+    height: 100%;
+    padding: 30px;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+.feature-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    background: #eaf2ff;
+    color: #0d6efd;
+    font-size: 1.4rem;
+}
+
+.feature-card h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.feature-card p {
+    margin-bottom: 0;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+
+/* ================= FOOTER ================= */
+
+.footer {
+    padding: 25px 0;
+    background: #111827;
+    color: #d1d5db;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+
+    .hero-section {
+        padding: 55px 0 70px;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .search-card {
+        margin-top: 35px;
+        padding: 20px;
+    }
+
+    .features-section {
+        padding: 60px 0;
+    }
+
+}
+/* ================= AUTH PAGES ================= */
+
+.auth-section {
+    min-height: calc(100vh - 73px);
+    padding: 60px 0;
+    background: linear-gradient(
+        135deg,
+        #eef4ff 0%,
+        #ffffff 100%
+    );
+}
+
+.auth-card {
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 15px 45px rgba(15, 23, 42, 0.10);
+}
+
+.auth-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    background: #eaf2ff;
+    color: #0d6efd;
+    font-size: 1.6rem;
+}
+
+.auth-card h2 {
+    font-weight: 700;
+}
+
+.auth-btn {
+    min-height: 48px;
+    font-weight: 600;
+}
+
+.auth-card a {
+    text-decoration: none;
+}
+
+.auth-card a:hover {
+    text-decoration: underline;
+}
+/* ================= SEAT SELECTION ================= */
+
+.driver-area {
+    width: 120px;
+    margin: 0 auto 30px;
+    padding: 12px;
+    text-align: center;
+    background: #f1f5f9;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.driver-area i {
+    display: block;
+    font-size: 1.5rem;
+    color: #0d6efd;
+}
+
+.seat-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 25px;
+    background: #f8fafc;
+    border-radius: 18px;
+}
+
+.seat-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.seat {
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.seat.available {
+    background: #dbeafe;
+    color: #1d4ed8;
+    cursor: pointer;
+}
+
+.seat.available:hover {
+    transform: translateY(-2px);
+}
+
+.seat.selected {
+    background: #0d6efd;
+    color: white;
+}
+
+.seat.booked {
+    background: #dc3545;
+    color: white;
+    cursor: not-allowed;
+}
+
+.seat-legend {
+    width: 25px;
+    height: 25px;
+    border-radius: 6px;
+}
+
+.available-seat {
+    background: #dbeafe;
+}
+
+.selected-seat {
+    background: #0d6efd;
+}
+
+.booked-seat {
+    background: #dc3545;
+}
+
+.selected-seat-info {
+    padding: 18px;
+    background: #f8fafc;
+    border-radius: 12px;
+}
+
+@media (max-width: 576px) {
+
+    .seat-container {
+        padding: 15px;
+    }
+
+    .seat-row {
+        gap: 7px;
+    }
+
+    .seat {
+        width: 40px;
+        height: 40px;
+        font-size: 0.85rem;
+    }
+
+}
